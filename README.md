@@ -38,3 +38,9 @@ docker-compose up --build
     ```bash 
     test/get_booking_by_date.sh 2024-09-30
     ```
+
+# User Interfaces
+- Customer
+    - http://localhost:8080/booking.html
+- Owner
+    - http://localhost:8080/owner.html

@@ -23,7 +23,7 @@ echo REQUEST:
 echo "$REQUEST_BODY"
 
 echo REPONSE:
-curl -X POST http://localhost:8080/book \
+curl -X POST http://localhost:8080/api/book \
   -H "Content-Type: application/json" \
   -d "$REQUEST_BODY"
 echo ""
