@@ -43,4 +43,5 @@ docker-compose up --build
 - Customer
     - http://localhost:8080/booking.html
 - Owner
+    - Suggested date september 30th 2024
     - http://localhost:8080/owner.html
