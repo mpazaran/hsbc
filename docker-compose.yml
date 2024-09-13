@@ -1,0 +1,46 @@
+version: "3.8"
+services:
+  restaurant-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./app/src:/app/src  # Mount source code
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-db
+    networks:
+      - app-network
+    environment:
+      - MYSQL_DB_HOST=${MYSQL_DB_HOST}
+      - MYSQL_DB_PORT=${MYSQL_DB_PORT}
+      - MYSQL_DB_USER=${MYSQL_DB_USER}
+      - MYSQL_DB_PASSWORD=${MYSQL_DB_PASSWORD}
+      - MYSQL_DB_NAME=${MYSQL_DB_NAME}
+
+  mysql-db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_DB_HOST=${MYSQL_DB_HOST}
+      - MYSQL_DB_PORT=${MYSQL_DB_PORT}
+      - MYSQL_USER=${MYSQL_DB_USER}
+      - MYSQL_PASSWORD=${MYSQL_DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_DB_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DB_NAME}
+    volumes:
+      - ./mysql/data:/var/lib/mysql  # Persist MySQL data in ./mysql/db
+      - ./mysql/scripts:/var/scripts # Map ./mysql/scripts to /var/scripts in the container
+    ports:
+      - "${MYSQL_DB_PORT}:${MYSQL_DB_PORT}"
+    networks:
+      - app-network
+    command: --bind-address=0.0.0.0
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
